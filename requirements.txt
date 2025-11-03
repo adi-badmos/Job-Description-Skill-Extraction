@@ -8,3 +8,7 @@ regex
 marshmallow==3.19.0
 environs
 doccano==1.8.4
+fastapi
+uvicorn
+pandas
+python-multipart
