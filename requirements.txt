@@ -1,0 +1,10 @@
+spacy==3.7.2
+pandas
+scikit-learn
+joblib
+tqdm
+streamlit
+regex
+marshmallow==3.19.0
+environs
+doccano==1.8.4
