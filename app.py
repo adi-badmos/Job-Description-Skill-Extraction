@@ -2,6 +2,10 @@ import streamlit as st
 from src.predict import load_models, extract_and_label
 import joblib
 import os
+import requests
+import json
+
+API_URL = "https://job-skill-api.onrender.com/extract"
 
 st.set_page_config(page_title="Skill Extractor", page_icon="🧠")
 st.title("Job Description Skill Extractor (spaCy NER + classifier)")
@@ -19,15 +23,18 @@ else:
 jd = st.text_area("Paste Job Description here", height=200)
 
 if st.button("Extract"):
-    if not nlp or not clf:
-        st.error("Models not loaded. Train models and provide correct paths.")
+    if not jd.strip():
+        st.error("Please paste a job description first.")
     else:
-        skills = extract_and_label(jd, nlp, clf)
+        r = requests.post(API_URL, json={"text": jd})
+        skills = r.json()
+
         tech = [s['span'] for s in skills if s['label']=='technical']
         soft = [s['span'] for s in skills if s['label']=='soft']
+
         st.subheader("Technical Skills")
         st.write(tech if tech else "—")
         st.subheader("Soft Skills")
         st.write(soft if soft else "—")
-        st.subheader("All extracted")
+        st.subheader("All Extracted Skills")
         st.json(skills)
