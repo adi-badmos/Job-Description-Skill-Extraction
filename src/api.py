@@ -1,7 +1,9 @@
-from fastapi import File, UploadFile
+from fastapi import File, UploadFile, FastAPI
 import pandas as pd
-from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
 from src.predict import load_models, extract_and_label
 
 app = FastAPI()
@@ -17,6 +19,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.mount("/static", StaticFiles(directory="web"), name="static")
+
+
+@app.get("/")
+def serve_ui():
+    # This now serves your existing web/index.html
+    return FileResponse("web/index.html")
 
 nlp, clf = load_models("./training/model-best", "./models/skill_classifier.joblib")
 
