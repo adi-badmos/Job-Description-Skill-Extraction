@@ -8,10 +8,6 @@ from src.predict import load_models, extract_and_label
 
 app = FastAPI()
 
-@app.get("/")
-def health():
-    return {"status": "ok", "service": "Job Skill Extraction API"}
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
