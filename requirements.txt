@@ -1,6 +1,5 @@
 numpy==1.26.4
 spacy==3.7.2
-en-core-web-sm==3.7.1
 pandas
 scikit-learn
 joblib
