@@ -25,8 +25,7 @@ app.mount("/static", StaticFiles(directory="web"), name="static")
 
 @app.get("/")
 def serve_ui():
-    # This now serves your existing web/index.html
-    return FileResponse("web/index.html")
+    return FileResponse("./web/index.html")
 
 nlp, clf = load_models("./training/model-best", "./models/skill_classifier.joblib")
 
